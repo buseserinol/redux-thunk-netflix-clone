@@ -4,6 +4,7 @@ import axios from "axios";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import Loader from "./Loader";
+import { Link } from "react-router-dom";
 
 const MovieList = ({ genre }) => {
   const [movies, setMovies] = useState(null);
@@ -34,12 +35,14 @@ const MovieList = ({ genre }) => {
         )}
         {movies?.map((movie) => (
           <SplideSlide>
-            <img
-              height={300}
-              className="max-w-[300px] h-full cursor-pointer rounded"
-              src={baseImgUrl + movie.poster_path}
-              alt={movie.title}
-            />
+            <Link to={`/detay/${movie.id}`}>
+              <img
+                height={300}
+                className="max-w-[300px] h-full cursor-pointer rounded"
+                src={baseImgUrl + movie.poster_path}
+                alt={movie.title}
+              />
+            </Link>
           </SplideSlide>
         ))}
       </Splide>
