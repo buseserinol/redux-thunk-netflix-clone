@@ -34,7 +34,7 @@ const Hero = () => {
 
           <div className="flex justify-center">
             <img
-              className="my-6 rounded img-fluid hero-img max-h-[300px]"
+              className="my-6 rounded img-fluid hero-img max-h-[300px] object-contain"
               src={baseImgUrl.concat(randomMovie.backdrop_path)}
               alt={randomMovie.title}
             />

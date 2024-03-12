@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { baseImgUrl, options } from "../constants";
 import axios from "axios";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
 
@@ -25,6 +24,7 @@ const MovieList = ({ genre }) => {
           autoWidth: true,
           rewind: true,
           gap: "10px",
+          lazyLoad: true,
         }}
         aria-label="Movies"
       >

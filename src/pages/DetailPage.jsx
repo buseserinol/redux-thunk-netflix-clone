@@ -3,9 +3,14 @@ import { useParams } from "react-router-dom";
 import { baseImgUrl, options } from "../constants";
 import axios from "axios";
 import Loader from "../components/Loader";
+import DetailDisplay from "../components/DetailDisplay";
+import millify from "millify";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import CastCard from "../components/CastCard";
 
 const DetailPage = () => {
-  const [movie, setMovie] = useState();
+  const [movie, setMovie] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -32,12 +37,64 @@ const DetailPage = () => {
               <span className="text-3xl font-semibold">{movie.title}</span>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* orta kısım */}
+          <div className="grid grid-cols-1 md:grid-cols-2 my-5">
             {/* sol taraf */}
-            <div></div>
+            <div>
+              <DetailDisplay title="Kategoriler" data={movie.genres} />
+              <DetailDisplay
+                title="Yapımcı Şirketler"
+                data={movie.production_companies}
+              />
+              <DetailDisplay
+                title="Konuşulan Diller"
+                data={movie.spoken_languages}
+              />
+              <DetailDisplay
+                title="Yapımcı Ülkeler"
+                data={movie.production_countries}
+              />
+            </div>
             {/* sağ taraf */}
-            <div>fgfg</div>
+            <div>
+              <p>{movie.overview}</p>
+
+              <p className="my-4">
+                <span>Bütçe:</span>
+                <span className="text-green-500 ms-2">
+                  {movie.budget === 0
+                    ? "Bilinmiyor"
+                    : millify(movie.budget) + "$"}
+                </span>
+              </p>
+
+              <p className="my-4">
+                <span>Gelir:</span>
+                <span className="text-green-500 ms-2">
+                  {movie.revenue === 0
+                    ? "Bilinmiyor"
+                    : millify(movie.revenue) + "$"}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {/* alt kısım */}
+          <div>
+            <Splide
+              options={{
+                autoWidth: true,
+                gap: "10px",
+                rewind: true,
+                lazyLoad: true,
+              }}
+            >
+              {movie.credits.cast.map((cast) => (
+                <SplideSlide>
+                  <CastCard key={cast.cast_id} cast={cast} />
+                </SplideSlide>
+              ))}
+            </Splide>
           </div>
         </div>
       )}
